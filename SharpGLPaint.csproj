@@ -9,27 +9,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
-      <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
-      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
-      <PackageReference Include="SharpGL.WPF" Version="3.1.1" />
+        <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0"/>
+        <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1"/>
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37"/>
+        <PackageReference Include="SharpGL.WPF" Version="3.1.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\Circle.png" />
-      <Resource Include="Assets\Circle.png" />
-      <None Remove="Assets\Ellipse.png" />
-      <Resource Include="Assets\Ellipse.png" />
-      <None Remove="Assets\Hexagon.png" />
-      <Resource Include="Assets\Hexagon.png" />
-      <None Remove="Assets\Line.png" />
-      <Resource Include="Assets\Line.png" />
-      <None Remove="Assets\Pentagon.png" />
-      <Resource Include="Assets\Pentagon.png" />
-      <None Remove="Assets\Rectangle.png" />
-      <Resource Include="Assets\Rectangle.png" />
-      <None Remove="Assets\Square.png" />
-      <Resource Include="Assets\Square.png" />
+        <None Remove="Assets\Circle.png"/>
+        <Resource Include="Assets\Circle.png"/>
+        <None Remove="Assets\Ellipse.png"/>
+        <Resource Include="Assets\Ellipse.png"/>
+        <None Remove="Assets\Hexagon.png"/>
+        <Resource Include="Assets\Hexagon.png"/>
+        <None Remove="Assets\Line.png"/>
+        <Resource Include="Assets\Line.png"/>
+        <None Remove="Assets\Pentagon.png"/>
+        <Resource Include="Assets\Pentagon.png"/>
+        <None Remove="Assets\Rectangle.png"/>
+        <Resource Include="Assets\Rectangle.png"/>
+        <None Remove="Assets\Square.png"/>
+        <Resource Include="Assets\Square.png"/>
     </ItemGroup>
 
 </Project>

@@ -1,11 +1,16 @@
 ﻿<Window x:Class="SharpGLPaint.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sharpGl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+        xmlns:local="clr-namespace:SharpGLPaint"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:sharpGl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
         Title="SharpGL Paint"
         Height="720"
         Width="1280">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
     <DockPanel>
         <Ribbon DockPanel.Dock="Top">
             <Ribbon.ApplicationMenu>
@@ -13,31 +18,43 @@
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Home">
                 <RibbonGroup Header="Shape">
+                    <RibbonGroup.Resources>
+                        <local:ShapeModeConverter x:Key="ShapeModeConverter" />
+                    </RibbonGroup.Resources>
                     <RibbonRadioButton Label="Line"
-                                       LargeImageSource="Assets/Line.png" />
+                                       LargeImageSource="Assets/Line.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Line}}" />
                     <RibbonRadioButton Label="Circle"
-                                       LargeImageSource="Assets/Circle.png" />
+                                       LargeImageSource="Assets/Circle.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Circle}}" />
                     <RibbonRadioButton Label="Rectangle"
-                                       LargeImageSource="Assets/Rectangle.png" />
+                                       LargeImageSource="Assets/Rectangle.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Rectangle}}" />
                     <RibbonRadioButton Label="Ellipse"
-                                       LargeImageSource="Assets/Ellipse.png" />
+                                       LargeImageSource="Assets/Ellipse.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Ellipse}}" />
                     <RibbonRadioButton Label="Square"
-                                       SmallImageSource="Assets/Square.png" />
+                                       SmallImageSource="Assets/Square.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Square}}" />
                     <RibbonRadioButton Label="Pentagon"
-                                       SmallImageSource="Assets/Pentagon.png" />
+                                       SmallImageSource="Assets/Pentagon.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Pentagon}}" />
                     <RibbonRadioButton Label="Hexagon"
-                                       SmallImageSource="Assets/Hexagon.png" />
+                                       SmallImageSource="Assets/Hexagon.png"
+                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Hexagon}}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Setting">
                     <StackPanel Margin="0,7"
                                 Orientation="Horizontal">
-                        <xctk:ColorPicker Width="40"
+                        <xctk:ColorPicker Name="ColorPicker"
+                                          SelectedColor="{Binding ShapeColor}"
                                           Margin="0,0,8,0"
+                                          Width="40"
                                           ShowAvailableColors="False"
                                           ShowDropDownButton="False"
-                                          ShowTabHeaders="False"
                                           UsingAlphaChannel="False" />
-                        <xctk:IntegerUpDown Minimum="1"
+                        <xctk:IntegerUpDown Value="{Binding Thickness}"
+                                            Minimum="1"
                                             Maximum="15"
                                             ClipValueToMinMax="True"
                                             TextAlignment="Center" />
@@ -52,6 +69,23 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <sharpGl:OpenGLControl Name="Board" />
+        <sharpGl:OpenGLControl Name="Board"
+                               OpenGLDraw="Board_OpenGLDraw"
+                               Resized="Board_Resized">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="MouseDown">
+                    <behaviors:InvokeCommandAction Command="{Binding StartDrawCommand}"
+                                                   CommandParameter="{Binding ElementName=Board}" />
+                </behaviors:EventTrigger>
+                <behaviors:EventTrigger EventName="MouseMove">
+                    <behaviors:InvokeCommandAction Command="{Binding TrackMouseCommand}"
+                                                   CommandParameter="{Binding ElementName=Board}" />
+                </behaviors:EventTrigger>
+                <behaviors:EventTrigger EventName="MouseUp">
+                    <behaviors:InvokeCommandAction Command="{Binding EndDrawCommand}"
+                                                   CommandParameter="{Binding ElementName=Board}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </sharpGl:OpenGLControl>
     </DockPanel>
 </Window>
