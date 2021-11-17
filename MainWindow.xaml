@@ -23,25 +23,25 @@
                     </RibbonGroup.Resources>
                     <RibbonRadioButton Label="Line"
                                        LargeImageSource="Assets/Line.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Line}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Line}}" />
                     <RibbonRadioButton Label="Circle"
                                        LargeImageSource="Assets/Circle.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Circle}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Circle}}" />
                     <RibbonRadioButton Label="Rectangle"
                                        LargeImageSource="Assets/Rectangle.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Rectangle}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Rectangle}}" />
                     <RibbonRadioButton Label="Ellipse"
                                        LargeImageSource="Assets/Ellipse.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Ellipse}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Ellipse}}" />
                     <RibbonRadioButton Label="Square"
                                        SmallImageSource="Assets/Square.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Square}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Square}}" />
                     <RibbonRadioButton Label="Pentagon"
                                        SmallImageSource="Assets/Pentagon.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Pentagon}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Pentagon}}" />
                     <RibbonRadioButton Label="Hexagon"
                                        SmallImageSource="Assets/Hexagon.png"
-                                       IsChecked="{Binding Path=Shape, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Hexagon}}" />
+                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Hexagon}}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Setting">
                     <StackPanel Margin="0,7"
@@ -55,7 +55,7 @@
                                           UsingAlphaChannel="False" />
                         <xctk:IntegerUpDown Value="{Binding Thickness}"
                                             Minimum="1"
-                                            Maximum="15"
+                                            Maximum="20"
                                             ClipValueToMinMax="True"
                                             TextAlignment="Center" />
                     </StackPanel>

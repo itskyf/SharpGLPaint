@@ -1,6 +1,4 @@
-﻿using System.Windows;
+﻿namespace SharpGLPaint;
 
-namespace SharpGLPaint;
-
-public partial class App : Application {
+public partial class App {
 }
