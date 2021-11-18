@@ -2,8 +2,7 @@
 using System.Drawing;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint.Shapes;
-
+namespace SharpGLPaint.Shapes {
 public static class ShapeFactory {
     public static Shape Create(ShapeMode key, Point startPoint, Point endPoint, Color color, float pointSize) {
         Shape shape = key switch {
@@ -19,4 +18,5 @@ public static class ShapeFactory {
 
         return shape;
     }
+}
 }

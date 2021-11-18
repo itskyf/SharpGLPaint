@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -8,21 +9,15 @@ using SharpGL.WPF;
 using SharpGLPaint.Shapes;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint;
-
+namespace SharpGLPaint {
 public class MainViewModel : ObservableObject {
+    private readonly List<Shape> _shapes = new();
     private ShapeMode _currentMode = ShapeMode.Line;
     private Shape? _preview;
 
     private Color _shapeColor = Colors.MediumPurple;
-
     private Point? _startPoint;
-
     private int _thickness = 1;
-
-    static MainViewModel() {
-        ShapeFactory.Register<Line>(ShapeMode.Line);
-    }
 
     public MainViewModel() {
         StartDrawCommand = new RelayCommand<OpenGLControl>(StartDraw);
@@ -51,11 +46,17 @@ public class MainViewModel : ObservableObject {
 
     public void Draw(OpenGL gl) {
         _preview?.Draw(gl);
+        foreach (var shape in _shapes) {
+            shape.Draw(gl);
+        }
     }
 
     private void StartDraw(OpenGLControl? board) {
-        var startPoint = Mouse.GetPosition(board);
-        _startPoint = new Point((int) startPoint.X, (int) startPoint.Y);
+        var position = Mouse.GetPosition(board);
+        _startPoint = new Point((int)position.X, (int)position.Y);
+        _preview = ShapeFactory.Create(
+            _currentMode, _startPoint.Value, _startPoint.Value, _shapeColor, _thickness
+        );
     }
 
     private void TrackMouse(OpenGLControl? board) {
@@ -64,13 +65,14 @@ public class MainViewModel : ObservableObject {
         }
 
         var position = Mouse.GetPosition(board);
-        var endPoint = new Point((int) position.X, (int) position.Y);
-
+        Point endPoint = new((int)position.X, (int)position.Y);
         _preview = ShapeFactory.Create(_currentMode, _startPoint.Value, endPoint, _shapeColor, _thickness);
     }
 
     private void EndDraw(OpenGLControl? board) {
+        _shapes.Add(_preview!);
         _preview = null;
         _startPoint = null;
     }
+}
 }
