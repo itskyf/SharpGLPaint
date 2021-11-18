@@ -5,6 +5,7 @@
               xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
               xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
               xmlns:sharpGl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+              Icon="Assets/AppIcon.ico"
               Title="SharpGL Paint"
               Height="720"
               Width="1280">
@@ -16,11 +17,6 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu Visibility="Collapsed" />
             </Ribbon.ApplicationMenu>
-            <Ribbon.QuickAccessToolBar>
-                <RibbonQuickAccessToolBar>
-                    <RibbonButton Label="Undo" />
-                </RibbonQuickAccessToolBar>
-            </Ribbon.QuickAccessToolBar>
             <RibbonTab Header="Home">
                 <RibbonGroup Header="Shape">
                     <RibbonGroup.Resources>

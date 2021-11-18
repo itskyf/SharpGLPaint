@@ -1,15 +1,14 @@
 ﻿using SharpGL;
 using SharpGL.WPF;
 
-namespace SharpGLPaint;
-
+namespace SharpGLPaint {
 public partial class MainWindow {
     private readonly MainViewModel _viewModel;
 
     public MainWindow() {
         InitializeComponent();
         ColorPicker.StandardColors.RemoveAt(0);
-        _viewModel = (MainViewModel) DataContext;
+        _viewModel = (MainViewModel)DataContext;
     }
 
     private void Board_OpenGLDraw(object sender, OpenGLRoutedEventArgs args) {
@@ -22,11 +21,12 @@ public partial class MainWindow {
 
     private void Board_Resized(object sender, OpenGLRoutedEventArgs args) {
         var gl = Board.OpenGL;
-        int width = (int) Board.ActualWidth, height = (int) Board.ActualHeight;
+        int width = (int)Board.ActualWidth, height = (int)Board.ActualHeight;
         gl.MatrixMode(OpenGL.GL_PROJECTION);
         gl.LoadIdentity();
         gl.ClearColor(1, 1, 1, 1);
         gl.Viewport(0, 0, width, height);
         gl.Ortho2D(0, width, height, 0);
     }
+}
 }
