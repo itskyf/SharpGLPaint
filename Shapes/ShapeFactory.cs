@@ -8,9 +8,9 @@ public static class ShapeFactory {
     public static Shape Create(ShapeMode key, Point startPoint, Point endPoint, Color color, float pointSize) {
         Shape shape = key switch {
             ShapeMode.Line => new Line(startPoint, endPoint, color, pointSize),
-            // ShapeMode.Circle => expr,
+            ShapeMode.Circle => new Circle(startPoint, endPoint, color, pointSize),
             ShapeMode.Rectangle => new Rectangle(startPoint, endPoint, color, pointSize),
-            // ShapeMode.Ellipse => expr,
+            ShapeMode.Ellipse => new Ellipse(startPoint, endPoint, color, pointSize),
             ShapeMode.Square => new Square(startPoint, endPoint, color, pointSize),
             // ShapeMode.Pentagon => expr,
             // ShapeMode.Hexagon => expr,
