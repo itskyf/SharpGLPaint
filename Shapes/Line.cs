@@ -14,27 +14,27 @@ public class Line : Shape {
     }
 
     protected override List<Point> InitPoints() {
-        int x0 = _startPoint.X, y0 = _startPoint.Y, x1 = _endPoint.X, y1 = _endPoint.Y;
-        int sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
-        int dx = Math.Abs(x1 - x0), dy = -Math.Abs(y1 - y0), err = dx + dy;
+        int x = _startPoint.X, y = _startPoint.Y;
+        int sx = x < _endPoint.X ? 1 : -1, sy = y < _endPoint.Y ? 1 : -1;
+        int dx = Math.Abs(_endPoint.X - x), dy = -Math.Abs(_endPoint.Y - y), err = dx + dy;
 
-        var points = new List<Point> { new(x0, y0) };
-        while (x0 != x1 || y0 != y1) {
-            var err2 = err * 2;
-            if (err2 >= dy) {
+        var points = new List<Point> { new(x, y) };
+        while (x != _endPoint.X || y != _endPoint.Y) {
+            var twiceErr = 2 * err;
+            if (twiceErr >= dy) {
                 err += dy;
-                x0 += sx;
+                x += sx;
             }
 
-            if (err2 <= dx) {
+            if (twiceErr <= dx) {
                 err += dx;
-                y0 += sy;
+                y += sy;
             }
 
-            points.Add(new Point(x0, y0));
+            points.Add(new Point(x, y));
         }
 
-        points.Add(new Point(x1, y1));
+        points.Add(new Point(_endPoint.X, _endPoint.Y));
         return points;
     }
 }
