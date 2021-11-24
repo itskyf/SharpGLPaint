@@ -15,7 +15,6 @@ public class MainViewModel : ObservableObject {
     private readonly List<Shape> _shapes = new();
     private ShapeMode _currentMode = ShapeMode.Line;
     private Shape? _preview;
-
     private Color _shapeColor = Colors.MediumPurple;
     private Point? _startPoint;
     private int _thickness = 2;

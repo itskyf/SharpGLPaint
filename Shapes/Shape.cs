@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using SharpGL;
 using Color = System.Windows.Media.Color;
@@ -18,10 +19,10 @@ public abstract class Shape {
         _pointSize = pointSize;
     }
 
-    public List<Point> Points {
+    public ReadOnlyCollection<Point> Points {
         get {
             _points ??= InitPoints();
-            return _points;
+            return _points.AsReadOnly();
         }
     }
 
