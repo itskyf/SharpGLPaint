@@ -12,8 +12,8 @@ public static class ShapeFactory {
             ShapeMode.Rectangle => new Rectangle(startPoint, endPoint, color, pointSize),
             ShapeMode.Ellipse => new Ellipse(startPoint, endPoint, color, pointSize),
             ShapeMode.Square => new Square(startPoint, endPoint, color, pointSize),
-            // ShapeMode.Pentagon => expr,
-            // ShapeMode.Hexagon => expr,
+            ShapeMode.Pentagon => new Pentagon(startPoint, endPoint, color, pointSize),
+            ShapeMode.Hexagon => new Hexagon(startPoint, endPoint, color, pointSize),
             _ => throw new ArgumentOutOfRangeException(nameof(key), key, null)
         };
 

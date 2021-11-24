@@ -25,7 +25,7 @@ public class Ellipse : Shape {
         int ry2 = _ry * _ry, rx2 = _rx * _rx, rx2Twice = rx2 * 2, ry2Twice = ry2 * 2;
 
         // Region 1
-        var p = ry2 - rx2 * _ry + 0.25 * rx2;
+        var p = ry2 - rx2 * _ry + 0.25f * rx2;
         int dx = 0, dy = rx2Twice * y;
         while (dx < dy) {
             ++x;
@@ -42,7 +42,7 @@ public class Ellipse : Shape {
         }
 
         // Region 2
-        p = ry2 * Math.Pow(x + 0.5, 2) + rx2 * Math.Pow(y - 1, 2) - rx2 * ry2;
+        p = ry2 * MathF.Pow(x + 0.5f, 2) + rx2 * MathF.Pow(y - 1, 2) - rx2 * ry2;
         while (y > 0) {
             --y;
             dy -= rx2Twice;

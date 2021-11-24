@@ -6,7 +6,7 @@ using Color = System.Windows.Media.Color;
 namespace SharpGLPaint.Shapes;
 
 public class Rectangle : Shape {
-    private readonly Line[] _lines;
+    private readonly Line[] _sides;
 
     public Rectangle(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
         int minX = Math.Min(startPoint.X, endPoint.X), minY = Math.Min(startPoint.Y, endPoint.Y);
@@ -16,7 +16,7 @@ public class Rectangle : Shape {
             bottomRight = new(maxX, maxY),
             topRight = new(maxX, minY);
 
-        _lines = new Line[] {
+        _sides = new Line[] {
             new(topLeft, bottomLeft, color, pointSize),
             new(bottomLeft, bottomRight, color, pointSize),
             new(bottomRight, topRight, color, pointSize),
@@ -26,7 +26,7 @@ public class Rectangle : Shape {
 
     protected override List<Point> InitPoints() {
         List<Point> points = new();
-        foreach (var line in _lines) {
+        foreach (var line in _sides) {
             points.AddRange(line.Points);
         }
 
