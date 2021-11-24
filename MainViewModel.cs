@@ -18,7 +18,7 @@ public class MainViewModel : ObservableObject {
 
     private Color _shapeColor = Colors.MediumPurple;
     private Point? _startPoint;
-    private int _thickness = 1;
+    private int _thickness = 2;
 
     public MainViewModel() {
         StartDrawCommand = new RelayCommand<OpenGLControl>(StartDraw);
@@ -71,7 +71,10 @@ public class MainViewModel : ObservableObject {
     }
 
     private void EndDraw(OpenGLControl? board) {
-        _shapes.Add(_preview!);
+        if (_preview != null) {
+            _shapes.Add(_preview);
+        }
+
         _preview = null;
         _startPoint = null;
     }
