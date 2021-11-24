@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint.Shapes {
+namespace SharpGLPaint.Shapes;
+
 public class Line : Shape {
     private readonly Point _startPoint, _endPoint;
 
@@ -17,7 +18,7 @@ public class Line : Shape {
         int sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
         int dx = Math.Abs(x1 - x0), dy = -Math.Abs(y1 - y0), err = dx + dy;
 
-        var points = new List<Point> {new(x0, y0)};
+        var points = new List<Point> { new(x0, y0) };
         while (x0 != x1 || y0 != y1) {
             var err2 = err * 2;
             if (err2 >= dy) {
@@ -36,5 +37,4 @@ public class Line : Shape {
         points.Add(new Point(x1, y1));
         return points;
     }
-}
 }

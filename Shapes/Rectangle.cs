@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint.Shapes {
+namespace SharpGLPaint.Shapes;
+
 public class Rectangle : Shape {
     private readonly Line[] _lines;
 
@@ -31,5 +32,4 @@ public class Rectangle : Shape {
 
         return points;
     }
-}
 }

@@ -9,7 +9,8 @@ using SharpGL.WPF;
 using SharpGLPaint.Shapes;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint {
+namespace SharpGLPaint;
+
 public class MainViewModel : ObservableObject {
     private readonly List<Shape> _shapes = new();
     private ShapeMode _currentMode = ShapeMode.Line;
@@ -74,5 +75,4 @@ public class MainViewModel : ObservableObject {
         _preview = null;
         _startPoint = null;
     }
-}
 }

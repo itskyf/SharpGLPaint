@@ -2,7 +2,8 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace SharpGLPaint {
+namespace SharpGLPaint;
+
 public enum ShapeMode {
     Line,
     Circle,
@@ -21,5 +22,4 @@ public class ShapeModeConverter : IValueConverter {
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
         return value.Equals(true) ? parameter : Binding.DoNothing;
     }
-}
 }

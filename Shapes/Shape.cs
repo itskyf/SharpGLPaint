@@ -3,7 +3,8 @@ using System.Drawing;
 using SharpGL;
 using Color = System.Windows.Media.Color;
 
-namespace SharpGLPaint.Shapes {
+namespace SharpGLPaint.Shapes;
+
 public abstract class Shape {
     private readonly float _pointSize;
     private readonly float _r, _g, _b;
@@ -31,12 +32,10 @@ public abstract class Shape {
         gl.Color(_r, _g, _b);
         gl.Begin(OpenGL.GL_POINTS);
 
-
         foreach (var point in Points) {
             gl.Vertex(point.X, point.Y);
         }
 
         gl.End();
     }
-}
 }

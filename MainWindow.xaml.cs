@@ -1,7 +1,8 @@
 ﻿using SharpGL;
 using SharpGL.WPF;
 
-namespace SharpGLPaint {
+namespace SharpGLPaint;
+
 public partial class MainWindow {
     private readonly MainViewModel _viewModel;
 
@@ -28,5 +29,4 @@ public partial class MainWindow {
         gl.Viewport(0, 0, width, height);
         gl.Ortho2D(0, width, height, 0);
     }
-}
 }

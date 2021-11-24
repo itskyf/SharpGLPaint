@@ -1,3 +1,3 @@
-﻿namespace SharpGLPaint {
+﻿namespace SharpGLPaint;
+
 public partial class App { }
-}
