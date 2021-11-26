@@ -1,21 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" >
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup >
-        <OutputType >WinExe</OutputType >
-        <TargetFramework >net6.0-windows</TargetFramework >
-        <Nullable >enable</Nullable >
-        <UseWPF >true</UseWPF >
-        <ApplicationIcon >Assets/AppIcon.ico</ApplicationIcon >
-    </PropertyGroup >
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
+    </PropertyGroup>
 
-    <ItemGroup >
+    <ItemGroup>
         <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
         <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
         <PackageReference Include="SharpGL.WPF" Version="3.1.1" />
-    </ItemGroup >
+    </ItemGroup>
 
-    <ItemGroup >
+    <ItemGroup>
         <None Remove="Assets\AppIcon.ico" />
         <Resource Include="Assets\AppIcon.ico" />
         <None Remove="Assets\Circle.png" />
@@ -32,6 +32,6 @@
         <Resource Include="Assets\Rectangle.png" />
         <None Remove="Assets\Square.png" />
         <Resource Include="Assets\Square.png" />
-    </ItemGroup >
+    </ItemGroup>
 
-</Project >
+</Project>
