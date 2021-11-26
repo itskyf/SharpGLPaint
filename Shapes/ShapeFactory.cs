@@ -4,6 +4,9 @@ using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
+/// <summary>
+///     Factory for converting shape mode to an instance
+/// </summary>
 public static class ShapeFactory {
     public static Shape Create(ShapeMode key, Point startPoint, Point endPoint, Color color, float pointSize) {
         Shape shape = key switch {

@@ -14,16 +14,19 @@ public class Pentagon : Shape {
             new(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y), new(), new(), new(), new()
         };
 
+        // Rotate vector by 72 degree
         for (var i = 1; i < 5; ++i) {
             vertices[i].X = (int)(vertices[i - 1].X * cos72 - vertices[i - 1].Y * sin72);
             vertices[i].Y = (int)(vertices[i - 1].X * sin72 + vertices[i - 1].Y * cos72);
-            vertices[i - 1].X += startPoint.X;
-            vertices[i - 1].Y += startPoint.Y;
         }
 
-        vertices[4].X += startPoint.X;
-        vertices[4].Y += startPoint.Y;
+        // Move vertices to center
+        for (var i = 0; i < 5; ++i) {
+            vertices[i].X += startPoint.X;
+            vertices[i].Y += startPoint.Y;
+        }
 
+        // Join line segments
         var sides = new Line[] {
             new(vertices[0], vertices[1], color, pointSize),
             new(vertices[1], vertices[2], color, pointSize),

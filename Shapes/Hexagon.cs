@@ -14,16 +14,19 @@ public class Hexagon : Shape {
             new(endPoint.X - startPoint.X, endPoint.Y - startPoint.Y), new(), new(), new(), new(), new()
         };
 
+        // Rotate vector by 60 degree
         for (var i = 1; i < 6; ++i) {
             vertices[i].X = (int)(vertices[i - 1].X * cos60 - vertices[i - 1].Y * sin60);
             vertices[i].Y = (int)(vertices[i - 1].X * sin60 + vertices[i - 1].Y * cos60);
-            vertices[i - 1].X += startPoint.X;
-            vertices[i - 1].Y += startPoint.Y;
         }
 
-        vertices[5].X += startPoint.X;
-        vertices[5].Y += startPoint.Y;
+        // Move vertices to center
+        for (var i = 0; i < 6; ++i) {
+            vertices[i].X += startPoint.X;
+            vertices[i].Y += startPoint.Y;
+        }
 
+        // Join line segments
         var sides = new Line[] {
             new(vertices[0], vertices[1], color, pointSize),
             new(vertices[1], vertices[2], color, pointSize),
@@ -32,7 +35,6 @@ public class Hexagon : Shape {
             new(vertices[4], vertices[5], color, pointSize),
             new(vertices[5], vertices[0], color, pointSize)
         };
-
         Points = new List<Point>();
         foreach (var line in sides) {
             Points.AddRange(line.ReadOnlyPoints);

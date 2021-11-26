@@ -13,8 +13,10 @@ public class Line : Shape {
         // _endPoint = endPoint;
 
         int x = startPoint.X, y = startPoint.Y;
+        // Decide x and y increment at the next step
         int sx = x < endPoint.X ? 1 : -1, sy = y < endPoint.Y ? 1 : -1;
-        int dx = Math.Abs(endPoint.X - x), dy = -Math.Abs(endPoint.Y - y), err = dx + dy;
+        int dx = Math.Abs(endPoint.X - x), dy = -Math.Abs(endPoint.Y - y);
+        var err = dx + dy;
 
         Points = new List<Point> { new(x, y) };
         while (x != endPoint.X || y != endPoint.Y) {

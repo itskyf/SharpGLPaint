@@ -64,6 +64,7 @@ public class Ellipse : Shape {
         reflectPoints.Reverse();
         points.AddRange(reflectPoints);
 
+        // Move to the true center
         Points = points.ConvertAll(point => {
             point.X += center.X;
             point.Y += center.Y;

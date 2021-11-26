@@ -5,6 +5,9 @@ using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
+/// <summary>
+///     Base class for a save; contains color, thickness and points list
+/// </summary>
 public abstract class Shape {
     private readonly float _pointSize;
     private readonly float _r, _g, _b;

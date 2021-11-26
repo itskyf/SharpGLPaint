@@ -13,7 +13,11 @@ using Color = System.Windows.Media.Color;
 namespace SharpGLPaint;
 
 public class MainViewModel : ObservableObject {
+    /// <value>
+    ///     Represents all saved shapes
+    /// </value>
     private readonly List<Shape> _shapes = new();
+
     private ShapeMode _currentMode = ShapeMode.Line;
     private string _drawTime = "-";
     private Shape? _preview;
@@ -31,6 +35,9 @@ public class MainViewModel : ObservableObject {
         });
     }
 
+    /// <value>
+    ///     Selected shape in the ribbon
+    /// </value>
     public ShapeMode CurrentMode {
         get => _currentMode;
         set => SetProperty(ref _currentMode, value);
@@ -56,6 +63,9 @@ public class MainViewModel : ObservableObject {
     public ICommand EndDrawCommand { get; }
     public ICommand ClearCommand { get; }
 
+    /// <summary>
+    ///     Draw the preview and all saved shapes
+    /// </summary>
     public void Draw(OpenGL gl) {
         _preview?.Draw(gl);
         foreach (var shape in _shapes) {
@@ -63,12 +73,18 @@ public class MainViewModel : ObservableObject {
         }
     }
 
+    /// <summary>
+    ///     Binding for MouseDown action, record the start position
+    /// </summary>
     private void StartDraw(OpenGLControl? board) {
         var position = Mouse.GetPosition(board);
         _startPoint = new Point((int)position.X, (int)position.Y);
         _preview = CreatePreview(_startPoint.Value);
     }
 
+    /// <summary>
+    ///     Binding for MouseMove action, record end point and create a preview shape
+    /// </summary>
     private void TrackMouse(OpenGLControl? board) {
         if (_startPoint == null) {
             return;
@@ -78,6 +94,9 @@ public class MainViewModel : ObservableObject {
         _preview = CreatePreview(new Point((int)position.X, (int)position.Y));
     }
 
+    /// <summary>
+    ///     Create a shape preview and update drawing time
+    /// </summary>
     private Shape CreatePreview(Point endPoint) {
         Stopwatch timer = new();
         timer.Start();
@@ -86,10 +105,14 @@ public class MainViewModel : ObservableObject {
         );
         timer.Stop();
         var milliseconds = timer.Elapsed.TotalMilliseconds;
+        // Use ms unit if elapsed time > 100 μs
         DrawTime = milliseconds > 0.1 ? $"{milliseconds:F} ms" : $"{milliseconds * 1000:00.00} μs";
         return preview;
     }
 
+    /// <summary>
+    ///     Add the preview to saved shapes and reset start position
+    /// </summary>
     private void EndDraw(OpenGLControl? board) {
         if (_preview != null) {
             _shapes.Add(_preview);

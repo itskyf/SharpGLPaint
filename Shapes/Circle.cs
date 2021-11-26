@@ -11,10 +11,13 @@ public class Circle : Shape {
     // private readonly int _radius;
 
     public Circle(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
+        // Crucial parameter
         var radius = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y)) / 2;
         var centerX = startPoint.X + (endPoint.X > startPoint.X ? radius : -radius);
         var centerY = startPoint.Y + (endPoint.Y > startPoint.Y ? radius : -radius);
         var center = new Point(centerX, centerY);
+
+        // If start point is also end point => a dot
         if (radius == 0) {
             Points = new List<Point> { center };
             return;
@@ -51,6 +54,7 @@ public class Circle : Shape {
         reflectPoints.Reverse();
         points.AddRange(reflectPoints);
 
+        // Move to center
         Points = points.ConvertAll(point => {
             point.X += center.X;
             point.Y += center.Y;
