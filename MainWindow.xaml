@@ -44,6 +44,10 @@
                                        SmallImageSource="Assets/Hexagon.png"
                                        IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Hexagon}}" />
                 </RibbonGroup>
+                <RibbonGroup Header="Editing">
+                    <RibbonButton Label="Clear"
+                                  Command="{Binding ClearCommand}" />
+                </RibbonGroup>
                 <RibbonGroup Header="Setting">
                     <StackPanel Margin="0,7"
                                 Orientation="Horizontal">
@@ -60,10 +64,11 @@
                                             ClipValueToMinMax="True"
                                             TextAlignment="Center" />
                     </StackPanel>
-                    <TextBlock>
+                    <TextBlock Width="105"
+                               MaxWidth="105">
                         <TextBlock.Inlines>
-                            <Run Text="Execution" />
-                            <Run Text="00.00s"
+                            <Run Text="Execution:" />
+                            <Run Text="{Binding DrawTime}"
                                  FontWeight="Bold" />
                         </TextBlock.Inlines>
                     </TextBlock>
