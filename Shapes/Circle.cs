@@ -7,25 +7,23 @@ using Color = System.Windows.Media.Color;
 namespace SharpGLPaint.Shapes;
 
 public class Circle : Shape {
-    private readonly Point _center;
-    private readonly int _radius;
+    // private readonly Point _center;
+    // private readonly int _radius;
 
     public Circle(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
-        _radius = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y)) / 2;
-        var centerX = startPoint.X + (endPoint.X > startPoint.X ? _radius : -_radius);
-        var centerY = startPoint.Y + (endPoint.Y > startPoint.Y ? _radius : -_radius);
-        _center = new Point(centerX, centerY);
-    }
-
-    protected override List<Point> InitPoints() {
-        if (_radius == 0) {
-            return new List<Point> { _center };
+        var radius = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y)) / 2;
+        var centerX = startPoint.X + (endPoint.X > startPoint.X ? radius : -radius);
+        var centerY = startPoint.Y + (endPoint.Y > startPoint.Y ? radius : -radius);
+        var center = new Point(centerX, centerY);
+        if (radius == 0) {
+            Points = new List<Point> { center };
+            return;
         }
 
-        int x = 0, y = _radius;
+        int x = 0, y = radius;
         var points = new List<Point> { new(x, y) };
 
-        var p = 1 - _radius;
+        var p = 1 - radius;
         while (x < y) {
             ++x;
             if (p < 0) {
@@ -53,9 +51,9 @@ public class Circle : Shape {
         reflectPoints.Reverse();
         points.AddRange(reflectPoints);
 
-        return points.ConvertAll(point => {
-            point.X += _center.X;
-            point.Y += _center.Y;
+        Points = points.ConvertAll(point => {
+            point.X += center.X;
+            point.Y += center.Y;
             return point;
         });
     }

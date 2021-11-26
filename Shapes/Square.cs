@@ -6,7 +6,7 @@ using Color = System.Windows.Media.Color;
 namespace SharpGLPaint.Shapes;
 
 public class Square : Shape {
-    private readonly Line[] _sides;
+    // private readonly Line[] _sides;
 
     public Square(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
         var length = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y));
@@ -15,20 +15,16 @@ public class Square : Shape {
 
         Point apex2 = new(startPoint.X, otherY), apex3 = new(otherX, otherY), apex4 = new(otherX, startPoint.Y);
 
-        _sides = new Line[] {
+        var sides = new Line[] {
             new(startPoint, apex2, color, pointSize),
             new(apex2, apex3, color, pointSize),
             new(apex3, apex4, color, pointSize),
             new(apex4, startPoint, color, pointSize)
         };
-    }
 
-    protected override List<Point> InitPoints() {
-        List<Point> points = new();
-        foreach (var line in _sides) {
-            points.AddRange(line.Points);
+        Points = new List<Point>();
+        foreach (var line in sides) {
+            Points.AddRange(line.ReadOnlyPoints);
         }
-
-        return points;
     }
 }
