@@ -8,6 +8,10 @@
         <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
         <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />

@@ -49,12 +49,11 @@
                                   Command="{Binding ClearCommand}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Setting">
-                    <StackPanel Margin="0,7"
-                                Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <xctk:ColorPicker Name="ColorPicker"
                                           SelectedColor="{Binding ShapeColor}"
                                           Margin="0,0,8,0"
-                                          Width="40"
+                                          Width="48"
                                           ShowAvailableColors="False"
                                           ShowDropDownButton="False"
                                           UsingAlphaChannel="False" />
@@ -64,7 +63,8 @@
                                             ClipValueToMinMax="True"
                                             TextAlignment="Center" />
                     </StackPanel>
-                    <TextBlock Width="105"
+                    <TextBlock Margin="0,8"
+                               Width="105"
                                MaxWidth="105">
                         <TextBlock.Inlines>
                             <Run Text="Execution:" />
