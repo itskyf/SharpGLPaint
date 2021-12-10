@@ -19,32 +19,54 @@
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Home">
                 <RibbonGroup Header="Shape">
-                    <RibbonGroup.Resources>
-                        <local:ShapeModeConverter x:Key="ShapeModeConverter" />
-                    </RibbonGroup.Resources>
                     <RibbonRadioButton Label="Line"
-                                       LargeImageSource="Assets/Line.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Line}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Line}"
+                                       IsChecked="True"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Line.png" />
                     <RibbonRadioButton Label="Circle"
-                                       LargeImageSource="Assets/Circle.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Circle}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Circle}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Circle.png" />
                     <RibbonRadioButton Label="Rectangle"
-                                       LargeImageSource="Assets/Rectangle.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Rectangle}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Rectangle}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Rectangle.png" />
                     <RibbonRadioButton Label="Ellipse"
-                                       LargeImageSource="Assets/Ellipse.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Ellipse}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Ellipse}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Ellipse.png" />
                     <RibbonRadioButton Label="Square"
-                                       SmallImageSource="Assets/Square.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Square}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Square}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Square.png" />
                     <RibbonRadioButton Label="Pentagon"
-                                       SmallImageSource="Assets/Pentagon.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Pentagon}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Pentagon}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Pentagon.png" />
                     <RibbonRadioButton Label="Hexagon"
-                                       SmallImageSource="Assets/Hexagon.png"
-                                       IsChecked="{Binding Path=CurrentMode, Converter={StaticResource ShapeModeConverter}, ConverterParameter={x:Static local:ShapeMode.Hexagon}}" />
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Hexagon}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Hexagon.png" />
+                    <RibbonRadioButton Label="Polygon"
+                                       Command="{Binding ModeCommand}"
+                                       CommandParameter="{x:Static local:ShapeMode.Polygon}"
+                                       GroupName="Mode"
+                                       SmallImageSource="Assets/Polygon.png" />
                 </RibbonGroup>
                 <RibbonGroup Header="Editing">
+                    <RibbonRadioButton Label="Select"
+                                       GroupName="Mode"
+                                       Command="{Binding ModeCommand}" />
+                    <RibbonButton Label="Fill"
+                                  Command="{Binding FillCommand}" />
                     <RibbonButton Label="Clear"
                                   Command="{Binding ClearCommand}" />
                 </RibbonGroup>
@@ -52,8 +74,8 @@
                     <StackPanel Orientation="Horizontal">
                         <xctk:ColorPicker Name="ColorPicker"
                                           SelectedColor="{Binding ShapeColor}"
-                                          Margin="0,0,8,0"
                                           Width="48"
+                                          Margin="0,0,8,0"
                                           ShowAvailableColors="False"
                                           ShowDropDownButton="False"
                                           UsingAlphaChannel="False" />
@@ -63,8 +85,7 @@
                                             ClipValueToMinMax="True"
                                             TextAlignment="Center" />
                     </StackPanel>
-                    <TextBlock Margin="0,8"
-                               Width="105"
+                    <TextBlock Width="105"
                                MaxWidth="105">
                         <TextBlock.Inlines>
                             <Run Text="Execution:" />
@@ -79,16 +100,16 @@
                                OpenGLDraw="Board_OpenGLDraw"
                                Resized="Board_Resized">
             <behaviors:Interaction.Triggers>
-                <behaviors:EventTrigger EventName="MouseDown">
-                    <behaviors:InvokeCommandAction Command="{Binding StartDrawCommand}"
+                <behaviors:EventTrigger EventName="MouseLeftButtonDown">
+                    <behaviors:InvokeCommandAction Command="{Binding LClickCommand}"
+                                                   CommandParameter="{Binding ElementName=Board}" />
+                </behaviors:EventTrigger>
+                <behaviors:EventTrigger EventName="MouseRightButtonDown">
+                    <behaviors:InvokeCommandAction Command="{Binding RClickCommand}"
                                                    CommandParameter="{Binding ElementName=Board}" />
                 </behaviors:EventTrigger>
                 <behaviors:EventTrigger EventName="MouseMove">
                     <behaviors:InvokeCommandAction Command="{Binding TrackMouseCommand}"
-                                                   CommandParameter="{Binding ElementName=Board}" />
-                </behaviors:EventTrigger>
-                <behaviors:EventTrigger EventName="MouseUp">
-                    <behaviors:InvokeCommandAction Command="{Binding EndDrawCommand}"
                                                    CommandParameter="{Binding ElementName=Board}" />
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using Color = System.Windows.Media.Color;
+using System.Windows.Media;
 
 namespace SharpGLPaint.Shapes;
 
@@ -8,18 +7,17 @@ namespace SharpGLPaint.Shapes;
 ///     Factory for converting shape mode to an instance
 /// </summary>
 public static class ShapeFactory {
-    public static Shape Create(ShapeMode key, Point startPoint, Point endPoint, Color color, float pointSize) {
-        Shape shape = key switch {
-            ShapeMode.Line => new Line(startPoint, endPoint, color, pointSize),
-            ShapeMode.Circle => new Circle(startPoint, endPoint, color, pointSize),
-            ShapeMode.Rectangle => new Rectangle(startPoint, endPoint, color, pointSize),
-            ShapeMode.Ellipse => new Ellipse(startPoint, endPoint, color, pointSize),
-            ShapeMode.Square => new Square(startPoint, endPoint, color, pointSize),
-            ShapeMode.Pentagon => new RegularPolygon(5, startPoint, endPoint, color, pointSize),
-            ShapeMode.Hexagon => new RegularPolygon(6, startPoint, endPoint, color, pointSize),
+    public static Shape Create(ShapeMode key, Color color, float pointSize, params object[] parameters) {
+        return key switch {
+            ShapeMode.Line => new Line(color, pointSize, parameters),
+            ShapeMode.Circle => new Circle(color, pointSize, parameters),
+            ShapeMode.Rectangle => new Rectangle(color, pointSize, parameters),
+            ShapeMode.Ellipse => new Ellipse(color, pointSize, parameters),
+            ShapeMode.Square => new Square(color, pointSize, parameters),
+            ShapeMode.Pentagon => new RegularPolygon(5, color, pointSize, parameters),
+            ShapeMode.Hexagon => new RegularPolygon(6, color, pointSize, parameters),
+            ShapeMode.Polygon => new Polygon(color, pointSize, parameters),
             _ => throw new ArgumentOutOfRangeException(nameof(key), key, null)
         };
-
-        return shape;
     }
 }

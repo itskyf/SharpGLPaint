@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using SharpGL;
+using SharpGLPaint.Fill;
 using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
 public class Circle : Shape {
-    // private readonly Point _center;
-    // private readonly int _radius;
+    private readonly Point _center;
 
-    public Circle(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
+    public Circle(Color color, float pointSize, params object[] parameters) : base(color, pointSize) {
+        var start = (Point)parameters[0];
+        var end = (Point)parameters[1];
+
         // Crucial parameter
-        var radius = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y)) / 2;
-        var centerX = startPoint.X + (endPoint.X > startPoint.X ? radius : -radius);
-        var centerY = startPoint.Y + (endPoint.Y > startPoint.Y ? radius : -radius);
-        var center = new Point(centerX, centerY);
+        var radius = Math.Min(Math.Abs(start.X - end.X), Math.Abs(start.Y - end.Y)) / 2;
+        var centerX = start.X + (end.X > start.X ? radius : -radius);
+        var centerY = start.Y + (end.Y > start.Y ? radius : -radius);
+        _center = new Point(centerX, centerY);
+        TopLeft = new Point(centerX - radius, centerY - radius);
+        BottomRight = new Point(centerX + radius, centerY + radius);
 
-        // If start point is also end point => a dot
-        if (radius == 0) {
-            Points = new List<Point> { center };
+        // If start point == end point => a dot
+        if (start == end) {
+            Points = new List<Point> { _center };
             return;
         }
 
@@ -56,9 +62,13 @@ public class Circle : Shape {
 
         // Move to center
         Points = points.ConvertAll(point => {
-            point.X += center.X;
-            point.Y += center.Y;
+            point.X += _center.X;
+            point.Y += _center.Y;
             return point;
         });
+    }
+
+    protected override List<Point> GetFillPoints(OpenGL gl) {
+        return Filling.FloodFill(Points, _center, TopLeft, BottomRight);
     }
 }

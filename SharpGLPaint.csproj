@@ -32,6 +32,8 @@
         <Resource Include="Assets\Line.png" />
         <None Remove="Assets\Pentagon.png" />
         <Resource Include="Assets\Pentagon.png" />
+        <None Remove="Assets\Polygon.png" />
+        <Resource Include="Assets\Polygon.png" />
         <None Remove="Assets\Rectangle.png" />
         <Resource Include="Assets\Rectangle.png" />
         <None Remove="Assets\Square.png" />

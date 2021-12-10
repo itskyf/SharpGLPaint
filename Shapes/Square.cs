@@ -1,31 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpGL;
+using SharpGLPaint.Fill;
 using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
 public class Square : Shape {
-    // private readonly Line[] _sides;
+    private readonly Point[] _vertices;
 
-    public Square(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
-        // Find side's length and increment from the start point
-        var length = Math.Min(Math.Abs(startPoint.X - endPoint.X), Math.Abs(startPoint.Y - endPoint.Y));
-        var otherX = startPoint.X + (endPoint.X > startPoint.X ? length : -length);
-        var otherY = startPoint.Y + (endPoint.Y > startPoint.Y ? length : -length);
-
-        Point vertex2 = new(startPoint.X, otherY), vertex3 = new(otherX, otherY), vertex4 = new(otherX, startPoint.Y);
-
-        // Join line segments
-        var sides = new Line[] {
-            new(startPoint, vertex2, color, pointSize),
-            new(vertex2, vertex3, color, pointSize),
-            new(vertex3, vertex4, color, pointSize),
-            new(vertex4, startPoint, color, pointSize)
-        };
+    public Square(Color color, float pointSize, params object[] parameters) : base(color, pointSize) {
         Points = new List<Point>();
-        foreach (var line in sides) {
-            Points.AddRange(line.ReadOnlyPoints);
+        Point start = (Point)parameters[0], end = (Point)parameters[1];
+
+        // Find side's length and increment from the start point
+        var length = Math.Min(Math.Abs(start.X - end.X), Math.Abs(start.Y - end.Y));
+        var otherX = start.X + (end.X > start.X ? length : -length);
+        var otherY = start.Y + (end.Y > start.Y ? length : -length);
+        int minX = Math.Min(start.X, otherX), minY = Math.Min(start.Y, otherY);
+
+        TopLeft = new Point(minX, minY);
+        BottomRight = new Point(minX + length, minY + length);
+        _vertices = new[] {
+            start, new(start.X, otherY), new(otherX, otherY), new(otherX, start.Y)
+        };
+
+        // Join edges
+        for (var i = 0; i < _vertices.Length - 1; ++i) {
+            var edge = new Line(color, pointSize, _vertices[i], _vertices[i + 1]);
+            Points.AddRange(edge.ReadOnlyPoints);
         }
+        var lastEdge = new Line(color, pointSize, _vertices[^1], _vertices[0]);
+        Points.AddRange(lastEdge.ReadOnlyPoints);
+    }
+
+    protected override List<Point> GetFillPoints(OpenGL gl) {
+        return Filling.Scanline(_vertices);
     }
 }

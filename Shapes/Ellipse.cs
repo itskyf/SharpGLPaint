@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using SharpGL;
+using SharpGLPaint.Fill;
 using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
 public class Ellipse : Shape {
-    // private readonly Point _center;
-    // private readonly int _rx, _ry;
+    private readonly Point _center;
 
-    public Ellipse(Point startPoint, Point endPoint, Color color, float pointSize) : base(color, pointSize) {
-        int minX = Math.Min(startPoint.X, endPoint.X), minY = Math.Min(startPoint.Y, endPoint.Y);
-        var rx = Math.Abs(startPoint.X - endPoint.X) / 2;
-        var ry = Math.Abs(startPoint.Y - endPoint.Y) / 2;
-        var center = new Point(minX + rx, minY + ry);
+    public Ellipse(Color color, float pointSize, params object[] parameters) : base(color, pointSize) {
+        var start = (Point)parameters[0];
+        var end = (Point)parameters[1];
+
+        int minX = Math.Min(start.X, end.X), minY = Math.Min(start.Y, end.Y);
+        int rx = Math.Abs(start.X - end.X) / 2, ry = Math.Abs(start.Y - end.Y) / 2;
+        _center = new Point(minX + rx, minY + ry);
+        TopLeft = new Point(minX, minY);
+        BottomRight = new Point(minX + 2 * rx, minY + 2 * ry);
 
         int x = 0, y = ry;
         var points = new List<Point> { new(x, y) };
@@ -66,9 +71,13 @@ public class Ellipse : Shape {
 
         // Move to the true center
         Points = points.ConvertAll(point => {
-            point.X += center.X;
-            point.Y += center.Y;
+            point.X += _center.X;
+            point.Y += _center.Y;
             return point;
         });
+    }
+
+    protected override List<Point> GetFillPoints(OpenGL gl) {
+        return Filling.FloodFill(Points, _center, TopLeft, BottomRight);
     }
 }

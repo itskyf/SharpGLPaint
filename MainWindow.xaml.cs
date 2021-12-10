@@ -15,12 +15,7 @@ public partial class MainWindow {
 
     private void Board_OpenGLDraw(object sender, OpenGLRoutedEventArgs args) {
         var gl = Board.OpenGL;
-        // Clear the color and depth buffer
-        gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
         _viewModel.Draw(gl);
-        gl.End();
-        //Execute a drawing immediately instead of waiting after a certain amount of time
-        gl.Flush();
     }
 
     private void Board_Resized(object sender, OpenGLRoutedEventArgs args) {

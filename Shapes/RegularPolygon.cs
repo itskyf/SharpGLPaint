@@ -1,44 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using SharpGL;
+using SharpGLPaint.Fill;
 using Color = System.Windows.Media.Color;
 
 namespace SharpGLPaint.Shapes;
 
 public class RegularPolygon : Shape {
-    public RegularPolygon(int numVertices, Point startPoint, Point endPoint, Color color, float pointSize)
-        : base(color, pointSize) {
+    private readonly Point[] _vertices;
+
+    public RegularPolygon(
+        int numVertices, Color color, float pointSize, params object[] parameters
+    ) : base(color, pointSize) {
         if (numVertices is <= 2 or > 60) {
             throw new ArgumentOutOfRangeException(
                 nameof(numVertices), numVertices, "Number of vertices must be in range [2, 60]"
             );
         }
+        Points = new List<Point>();
+        Point center = (Point)parameters[0], end = (Point)parameters[1];
 
         // Crucial parameters
-        var vertices = new Point[numVertices - 1];
+        _vertices = new Point[numVertices];
+        _vertices[0] = end;
         var radianBetweenVertex = 2 * MathF.PI / numVertices;
-        int x = endPoint.X - startPoint.X, y = endPoint.Y - startPoint.Y;
+        int x = end.X - center.X, y = end.Y - center.Y;
 
         // Rotate vector
-        for (var i = 0; i < vertices.Length; ++i) {
-            var nextRadian = (i + 1) * radianBetweenVertex;
+        for (var i = 1; i < _vertices.Length; ++i) {
+            var nextRadian = i * radianBetweenVertex;
             var cos = MathF.Cos(nextRadian);
             var sin = MathF.Sin(nextRadian);
-            vertices[i].X = (int)(x * cos - y * sin) + startPoint.X;
-            vertices[i].Y = (int)(x * sin + y * cos) + startPoint.Y;
+            _vertices[i].X = (int)(x * cos - y * sin) + center.X;
+            _vertices[i].Y = (int)(x * sin + y * cos) + center.Y;
         }
 
-        // Join line segments
-        var sides = new List<Line> { new(endPoint, vertices[0], color, pointSize) };
-        for (var i = 0; i < vertices.Length - 1; ++i) {
-            sides.Add(new Line(vertices[i], vertices[i + 1], color, pointSize));
+        int minX = int.MaxValue, minY = int.MaxValue, maxX = int.MinValue, maxY = int.MinValue;
+        foreach (var vertex in _vertices) {
+            minX = Math.Min(minX, vertex.X);
+            minY = Math.Min(minY, vertex.Y);
+            maxX = Math.Max(maxX, vertex.X);
+            maxY = Math.Max(maxY, vertex.Y);
         }
+        TopLeft = new Point(minX, minY);
+        BottomRight = new Point(maxX, maxY);
 
-        sides.Add(new Line(vertices[^1], endPoint, color, pointSize));
-
-        Points = new List<Point>();
-        foreach (var line in sides) {
-            Points.AddRange(line.ReadOnlyPoints);
+        // Join edges
+        for (var i = 0; i < _vertices.Length - 1; ++i) {
+            var edge = new Line(color, pointSize, _vertices[i], _vertices[i + 1]);
+            Points.AddRange(edge.ReadOnlyPoints);
         }
+        var lastEdge = new Line(color, pointSize, _vertices[^1], _vertices[0]);
+        Points.AddRange(lastEdge.ReadOnlyPoints);
+    }
+
+    protected override List<Point> GetFillPoints(OpenGL gl) {
+        return Filling.Scanline(_vertices);
     }
 }
